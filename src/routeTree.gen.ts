@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -30,11 +29,6 @@ import { Route as ServicesEcommerceRouteImport } from './routes/services.ecommer
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesRoute = ServicesRouteImport.update({
-  id: '/services',
-  path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -122,7 +116,6 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/services/ecommerce': typeof ServicesEcommerceRoute
   '/services/hosting': typeof ServicesHostingRoute
@@ -160,7 +153,6 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
-  '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/services/ecommerce': typeof ServicesEcommerceRoute
   '/services/hosting': typeof ServicesHostingRoute
@@ -181,7 +173,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/portfolio'
     | '/pricing'
-    | '/services'
     | '/sitemap.xml'
     | '/services/ecommerce'
     | '/services/hosting'
@@ -218,7 +209,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/portfolio'
     | '/pricing'
-    | '/services'
     | '/sitemap.xml'
     | '/services/ecommerce'
     | '/services/hosting'
@@ -238,7 +228,6 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   PortfolioRoute: typeof PortfolioRoute
   PricingRoute: typeof PricingRoute
-  ServicesRoute: typeof ServicesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -249,13 +238,6 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services': {
-      id: '/services'
-      path: '/services'
-      fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -366,30 +348,6 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ServicesRouteChildren {
-  ServicesEcommerceRoute: typeof ServicesEcommerceRoute
-  ServicesHostingRoute: typeof ServicesHostingRoute
-  ServicesMigrationRoute: typeof ServicesMigrationRoute
-  ServicesSchedulingRoute: typeof ServicesSchedulingRoute
-  ServicesSeoRoute: typeof ServicesSeoRoute
-  ServicesWebDesignRoute: typeof ServicesWebDesignRoute
-  ServicesIndexRoute: typeof ServicesIndexRoute
-}
-
-const ServicesRouteChildren: ServicesRouteChildren = {
-  ServicesEcommerceRoute: ServicesEcommerceRoute,
-  ServicesHostingRoute: ServicesHostingRoute,
-  ServicesMigrationRoute: ServicesMigrationRoute,
-  ServicesSchedulingRoute: ServicesSchedulingRoute,
-  ServicesSeoRoute: ServicesSeoRoute,
-  ServicesWebDesignRoute: ServicesWebDesignRoute,
-  ServicesIndexRoute: ServicesIndexRoute,
-}
-
-const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
-  ServicesRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -399,9 +357,18 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   PortfolioRoute: PortfolioRoute,
   PricingRoute: PricingRoute,
-  ServicesRoute: ServicesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
