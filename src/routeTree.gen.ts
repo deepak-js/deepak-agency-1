@@ -9,14 +9,62 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BookACallRouteImport } from './routes/book-a-call'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as ServicesWebDesignRouteImport } from './routes/services.web-design'
+import { Route as ServicesSeoRouteImport } from './routes/services.seo'
+import { Route as ServicesSchedulingRouteImport } from './routes/services.scheduling'
+import { Route as ServicesMigrationRouteImport } from './routes/services.migration'
+import { Route as ServicesHostingRouteImport } from './routes/services.hosting'
+import { Route as ServicesEcommerceRouteImport } from './routes/services.ecommerce'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookACallRoute = BookACallRouteImport.update({
+  id: '/book-a-call',
+  path: '/book-a-call',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -34,46 +82,222 @@ const ServicesIndexRoute = ServicesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesWebDesignRoute = ServicesWebDesignRouteImport.update({
+  id: '/web-design',
+  path: '/web-design',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesSeoRoute = ServicesSeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesSchedulingRoute = ServicesSchedulingRouteImport.update({
+  id: '/scheduling',
+  path: '/scheduling',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesMigrationRoute = ServicesMigrationRouteImport.update({
+  id: '/migration',
+  path: '/migration',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesHostingRoute = ServicesHostingRouteImport.update({
+  id: '/hosting',
+  path: '/hosting',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesEcommerceRoute = ServicesEcommerceRouteImport.update({
+  id: '/ecommerce',
+  path: '/ecommerce',
+  getParentRoute: () => ServicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/book-a-call': typeof BookACallRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/portfolio': typeof PortfolioRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/ecommerce': typeof ServicesEcommerceRoute
+  '/services/hosting': typeof ServicesHostingRoute
+  '/services/migration': typeof ServicesMigrationRoute
+  '/services/scheduling': typeof ServicesSchedulingRoute
+  '/services/seo': typeof ServicesSeoRoute
+  '/services/web-design': typeof ServicesWebDesignRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/book-a-call': typeof BookACallRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/portfolio': typeof PortfolioRoute
+  '/pricing': typeof PricingRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/ecommerce': typeof ServicesEcommerceRoute
+  '/services/hosting': typeof ServicesHostingRoute
+  '/services/migration': typeof ServicesMigrationRoute
+  '/services/scheduling': typeof ServicesSchedulingRoute
+  '/services/seo': typeof ServicesSeoRoute
+  '/services/web-design': typeof ServicesWebDesignRoute
   '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/book-a-call': typeof BookACallRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/portfolio': typeof PortfolioRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/ecommerce': typeof ServicesEcommerceRoute
+  '/services/hosting': typeof ServicesHostingRoute
+  '/services/migration': typeof ServicesMigrationRoute
+  '/services/scheduling': typeof ServicesSchedulingRoute
+  '/services/seo': typeof ServicesSeoRoute
+  '/services/web-design': typeof ServicesWebDesignRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/services' | '/services/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/book-a-call'
+    | '/contact'
+    | '/faq'
+    | '/portfolio'
+    | '/pricing'
+    | '/services'
+    | '/sitemap.xml'
+    | '/services/ecommerce'
+    | '/services/hosting'
+    | '/services/migration'
+    | '/services/scheduling'
+    | '/services/seo'
+    | '/services/web-design'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/services'
-  id: '__root__' | '/' | '/about' | '/services' | '/services/'
+  to:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/book-a-call'
+    | '/contact'
+    | '/faq'
+    | '/portfolio'
+    | '/pricing'
+    | '/sitemap.xml'
+    | '/services/ecommerce'
+    | '/services/hosting'
+    | '/services/migration'
+    | '/services/scheduling'
+    | '/services/seo'
+    | '/services/web-design'
+    | '/services'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/book-a-call'
+    | '/contact'
+    | '/faq'
+    | '/portfolio'
+    | '/pricing'
+    | '/services'
+    | '/sitemap.xml'
+    | '/services/ecommerce'
+    | '/services/hosting'
+    | '/services/migration'
+    | '/services/scheduling'
+    | '/services/seo'
+    | '/services/web-design'
+    | '/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BlogRoute: typeof BlogRoute
+  BookACallRoute: typeof BookACallRoute
+  ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
+  PortfolioRoute: typeof PortfolioRoute
+  PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-a-call': {
+      id: '/book-a-call'
+      path: '/book-a-call'
+      fullPath: '/book-a-call'
+      preLoaderRoute: typeof BookACallRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -97,14 +321,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesIndexRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/web-design': {
+      id: '/services/web-design'
+      path: '/web-design'
+      fullPath: '/services/web-design'
+      preLoaderRoute: typeof ServicesWebDesignRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/seo': {
+      id: '/services/seo'
+      path: '/seo'
+      fullPath: '/services/seo'
+      preLoaderRoute: typeof ServicesSeoRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/scheduling': {
+      id: '/services/scheduling'
+      path: '/scheduling'
+      fullPath: '/services/scheduling'
+      preLoaderRoute: typeof ServicesSchedulingRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/migration': {
+      id: '/services/migration'
+      path: '/migration'
+      fullPath: '/services/migration'
+      preLoaderRoute: typeof ServicesMigrationRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/hosting': {
+      id: '/services/hosting'
+      path: '/hosting'
+      fullPath: '/services/hosting'
+      preLoaderRoute: typeof ServicesHostingRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/ecommerce': {
+      id: '/services/ecommerce'
+      path: '/ecommerce'
+      fullPath: '/services/ecommerce'
+      preLoaderRoute: typeof ServicesEcommerceRouteImport
+      parentRoute: typeof ServicesRoute
+    }
   }
 }
 
 interface ServicesRouteChildren {
+  ServicesEcommerceRoute: typeof ServicesEcommerceRoute
+  ServicesHostingRoute: typeof ServicesHostingRoute
+  ServicesMigrationRoute: typeof ServicesMigrationRoute
+  ServicesSchedulingRoute: typeof ServicesSchedulingRoute
+  ServicesSeoRoute: typeof ServicesSeoRoute
+  ServicesWebDesignRoute: typeof ServicesWebDesignRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesEcommerceRoute: ServicesEcommerceRoute,
+  ServicesHostingRoute: ServicesHostingRoute,
+  ServicesMigrationRoute: ServicesMigrationRoute,
+  ServicesSchedulingRoute: ServicesSchedulingRoute,
+  ServicesSeoRoute: ServicesSeoRoute,
+  ServicesWebDesignRoute: ServicesWebDesignRoute,
   ServicesIndexRoute: ServicesIndexRoute,
 }
 
@@ -115,7 +393,14 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BlogRoute: BlogRoute,
+  BookACallRoute: BookACallRoute,
+  ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
+  PortfolioRoute: PortfolioRoute,
+  PricingRoute: PricingRoute,
   ServicesRoute: ServicesRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
