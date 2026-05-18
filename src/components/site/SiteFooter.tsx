@@ -6,26 +6,27 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 lg:grid-cols-4 lg:px-8">
         <div>
           <h3 className="text-serif text-2xl">
-            <span className="italic text-muted-foreground">by</span> HeisenLabs
+            <span className="text-foreground">Heisen</span>{" "}
+            <span className="italic text-muted-foreground">Labs</span>
           </h3>
           <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-            A small studio building careful, performant websites for clients who care about the details.
+            A boutique AI and automation studio building the systems behind business growth.
           </p>
         </div>
         <FooterCol title="Services" links={[
-          { label: "Website design", to: "/services/web-design" },
+          { label: "AI Integrations", to: "/services/ai-integrations" },
+          { label: "Automation", to: "/services/automation" },
+          { label: "Web Systems", to: "/services/web-systems" },
           { label: "SEO", to: "/services/seo" },
-          { label: "Hosting & care", to: "/services/hosting" },
-          { label: "Migration", to: "/services/migration" },
-          { label: "E-commerce", to: "/services/ecommerce" },
-          { label: "Scheduling", to: "/services/scheduling" },
+          { label: "Data Pipelines", to: "/services/data-pipelines" },
+          { label: "AI Agents", to: "/services/ai-agents" },
         ]} />
-        <FooterCol title="Company" links={[
+        <FooterCol title="Studio" links={[
           { label: "About", to: "/about" },
-          { label: "Portfolio", to: "/portfolio" },
+          { label: "Work", to: "/portfolio" },
           { label: "Pricing", to: "/pricing" },
           { label: "FAQ", to: "/faq" },
-          { label: "Blog", to: "/blog" },
+          { label: "Field notes", to: "/blog" },
         ]} />
         <FooterCol title="Get in touch" links={[
           { label: "Contact", to: "/contact" },
@@ -34,8 +35,8 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border/40">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 text-xs text-muted-foreground lg:px-8">
-          <span>© {new Date().getFullYear()} HeisenLabs Studio</span>
-          <span>Crafted with care.</span>
+          <span>© {new Date().getFullYear()} Heisen Labs</span>
+          <span>The systems behind business growth.</span>
         </div>
       </div>
     </footer>

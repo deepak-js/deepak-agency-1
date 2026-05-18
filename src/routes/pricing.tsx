@@ -5,9 +5,9 @@ import { PageHero } from "@/components/site/PageHero";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — HeisenLabs" },
-      { name: "description", content: "Transparent, fixed-fee pricing for websites, SEO, and ongoing care." },
-      { property: "og:title", content: "Pricing — HeisenLabs" },
+      { title: "Pricing — Heisen Labs" },
+      { name: "description", content: "Fixed-fee engagements for web systems, automation, and AI partnerships." },
+      { property: "og:title", content: "Pricing — Heisen Labs" },
       { property: "og:url", content: "/pricing" },
     ],
     links: [{ rel: "canonical", href: "/pricing" }],
@@ -19,28 +19,32 @@ const tiers = [
   {
     name: "Starter",
     price: "From $4,500",
-    desc: "A focused launch site for small teams and founders.",
-    features: ["Up to 5 pages", "Custom design", "Mobile-perfect", "Basic SEO", "Launch in ~3 weeks"],
+    desc: "A focused web system for founders and small teams.",
+    features: ["Up to 5 pages, custom designed", "Performance + SEO baseline", "CMS configured", "Analytics + tracking", "Launch in ~3 weeks"],
   },
   {
-    name: "Studio",
-    price: "From $9,500",
-    desc: "Our most popular package — full site, full polish.",
-    features: ["Up to 12 pages", "Bespoke art direction", "CMS configured", "Advanced SEO", "Analytics & tracking", "Launch in ~6 weeks"],
+    name: "Systems",
+    price: "From $12,000",
+    desc: "Site plus the first automation or AI integration wired in.",
+    features: ["Web system included", "One automation or AI integration", "Internal docs + handoff", "Observability + alerting", "30 days of post-launch support"],
     featured: true,
   },
   {
-    name: "Bespoke",
+    name: "Studio",
     price: "Let's talk",
-    desc: "E-commerce, custom apps, and multi-region launches.",
-    features: ["Unlimited pages", "Custom integrations", "Dedicated team", "Migration support", "Ongoing partnership"],
+    desc: "An ongoing partnership for teams shipping AI and automation continuously.",
+    features: ["Roadmap of systems, not one-offs", "Embedded senior team", "Custom agents and pipelines", "SLAs and on-call", "Quarterly business reviews"],
   },
 ];
 
 function PricingPage() {
   return (
     <>
-      <PageHero eyebrow="Pricing" title="Honest pricing. No surprises." subtitle="Fixed-fee projects, scoped before we start. You'll always know what you're paying for." />
+      <PageHero
+        eyebrow="Pricing"
+        title="Fixed scope. Honest numbers."
+        subtitle="Every engagement is scoped before we start, so you always know what you're paying for and what you'll get back."
+      />
       <section className="mx-auto max-w-7xl px-4 pb-20 lg:px-8">
         <div className="grid gap-5 lg:grid-cols-3">
           {tiers.map((t) => (

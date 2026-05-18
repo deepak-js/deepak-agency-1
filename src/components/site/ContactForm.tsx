@@ -4,12 +4,13 @@ import { toast } from "sonner";
 import { submitContact } from "@/lib/forms.functions";
 
 const subjects = [
-  "Website design",
+  "AI integration",
+  "Automation / workflow",
+  "New website or web system",
   "SEO",
-  "Hosting & maintenance",
-  "Migration",
-  "E-commerce",
-  "Just saying hi",
+  "AI agent / internal copilot",
+  "Data pipeline",
+  "Something else",
 ];
 
 export function ContactForm({ variant = "card" }: { variant?: "card" | "plain" }) {

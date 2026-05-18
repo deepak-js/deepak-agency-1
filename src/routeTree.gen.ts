@@ -19,12 +19,12 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
-import { Route as ServicesWebDesignRouteImport } from './routes/services.web-design'
+import { Route as ServicesWebSystemsRouteImport } from './routes/services.web-systems'
 import { Route as ServicesSeoRouteImport } from './routes/services.seo'
-import { Route as ServicesSchedulingRouteImport } from './routes/services.scheduling'
-import { Route as ServicesMigrationRouteImport } from './routes/services.migration'
-import { Route as ServicesHostingRouteImport } from './routes/services.hosting'
-import { Route as ServicesEcommerceRouteImport } from './routes/services.ecommerce'
+import { Route as ServicesDataPipelinesRouteImport } from './routes/services.data-pipelines'
+import { Route as ServicesAutomationRouteImport } from './routes/services.automation'
+import { Route as ServicesAiIntegrationsRouteImport } from './routes/services.ai-integrations'
+import { Route as ServicesAiAgentsRouteImport } from './routes/services.ai-agents'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -76,9 +76,9 @@ const ServicesIndexRoute = ServicesIndexRouteImport.update({
   path: '/services/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesWebDesignRoute = ServicesWebDesignRouteImport.update({
-  id: '/services/web-design',
-  path: '/services/web-design',
+const ServicesWebSystemsRoute = ServicesWebSystemsRouteImport.update({
+  id: '/services/web-systems',
+  path: '/services/web-systems',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesSeoRoute = ServicesSeoRouteImport.update({
@@ -86,24 +86,24 @@ const ServicesSeoRoute = ServicesSeoRouteImport.update({
   path: '/services/seo',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesSchedulingRoute = ServicesSchedulingRouteImport.update({
-  id: '/services/scheduling',
-  path: '/services/scheduling',
+const ServicesDataPipelinesRoute = ServicesDataPipelinesRouteImport.update({
+  id: '/services/data-pipelines',
+  path: '/services/data-pipelines',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesMigrationRoute = ServicesMigrationRouteImport.update({
-  id: '/services/migration',
-  path: '/services/migration',
+const ServicesAutomationRoute = ServicesAutomationRouteImport.update({
+  id: '/services/automation',
+  path: '/services/automation',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesHostingRoute = ServicesHostingRouteImport.update({
-  id: '/services/hosting',
-  path: '/services/hosting',
+const ServicesAiIntegrationsRoute = ServicesAiIntegrationsRouteImport.update({
+  id: '/services/ai-integrations',
+  path: '/services/ai-integrations',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesEcommerceRoute = ServicesEcommerceRouteImport.update({
-  id: '/services/ecommerce',
-  path: '/services/ecommerce',
+const ServicesAiAgentsRoute = ServicesAiAgentsRouteImport.update({
+  id: '/services/ai-agents',
+  path: '/services/ai-agents',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -117,12 +117,12 @@ export interface FileRoutesByFullPath {
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/services/ecommerce': typeof ServicesEcommerceRoute
-  '/services/hosting': typeof ServicesHostingRoute
-  '/services/migration': typeof ServicesMigrationRoute
-  '/services/scheduling': typeof ServicesSchedulingRoute
+  '/services/ai-agents': typeof ServicesAiAgentsRoute
+  '/services/ai-integrations': typeof ServicesAiIntegrationsRoute
+  '/services/automation': typeof ServicesAutomationRoute
+  '/services/data-pipelines': typeof ServicesDataPipelinesRoute
   '/services/seo': typeof ServicesSeoRoute
-  '/services/web-design': typeof ServicesWebDesignRoute
+  '/services/web-systems': typeof ServicesWebSystemsRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -135,12 +135,12 @@ export interface FileRoutesByTo {
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/services/ecommerce': typeof ServicesEcommerceRoute
-  '/services/hosting': typeof ServicesHostingRoute
-  '/services/migration': typeof ServicesMigrationRoute
-  '/services/scheduling': typeof ServicesSchedulingRoute
+  '/services/ai-agents': typeof ServicesAiAgentsRoute
+  '/services/ai-integrations': typeof ServicesAiIntegrationsRoute
+  '/services/automation': typeof ServicesAutomationRoute
+  '/services/data-pipelines': typeof ServicesDataPipelinesRoute
   '/services/seo': typeof ServicesSeoRoute
-  '/services/web-design': typeof ServicesWebDesignRoute
+  '/services/web-systems': typeof ServicesWebSystemsRoute
   '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
@@ -154,12 +154,12 @@ export interface FileRoutesById {
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/services/ecommerce': typeof ServicesEcommerceRoute
-  '/services/hosting': typeof ServicesHostingRoute
-  '/services/migration': typeof ServicesMigrationRoute
-  '/services/scheduling': typeof ServicesSchedulingRoute
+  '/services/ai-agents': typeof ServicesAiAgentsRoute
+  '/services/ai-integrations': typeof ServicesAiIntegrationsRoute
+  '/services/automation': typeof ServicesAutomationRoute
+  '/services/data-pipelines': typeof ServicesDataPipelinesRoute
   '/services/seo': typeof ServicesSeoRoute
-  '/services/web-design': typeof ServicesWebDesignRoute
+  '/services/web-systems': typeof ServicesWebSystemsRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
@@ -174,12 +174,12 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/pricing'
     | '/sitemap.xml'
-    | '/services/ecommerce'
-    | '/services/hosting'
-    | '/services/migration'
-    | '/services/scheduling'
+    | '/services/ai-agents'
+    | '/services/ai-integrations'
+    | '/services/automation'
+    | '/services/data-pipelines'
     | '/services/seo'
-    | '/services/web-design'
+    | '/services/web-systems'
     | '/services/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -192,12 +192,12 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/pricing'
     | '/sitemap.xml'
-    | '/services/ecommerce'
-    | '/services/hosting'
-    | '/services/migration'
-    | '/services/scheduling'
+    | '/services/ai-agents'
+    | '/services/ai-integrations'
+    | '/services/automation'
+    | '/services/data-pipelines'
     | '/services/seo'
-    | '/services/web-design'
+    | '/services/web-systems'
     | '/services'
   id:
     | '__root__'
@@ -210,12 +210,12 @@ export interface FileRouteTypes {
     | '/portfolio'
     | '/pricing'
     | '/sitemap.xml'
-    | '/services/ecommerce'
-    | '/services/hosting'
-    | '/services/migration'
-    | '/services/scheduling'
+    | '/services/ai-agents'
+    | '/services/ai-integrations'
+    | '/services/automation'
+    | '/services/data-pipelines'
     | '/services/seo'
-    | '/services/web-design'
+    | '/services/web-systems'
     | '/services/'
   fileRoutesById: FileRoutesById
 }
@@ -229,12 +229,12 @@ export interface RootRouteChildren {
   PortfolioRoute: typeof PortfolioRoute
   PricingRoute: typeof PricingRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  ServicesEcommerceRoute: typeof ServicesEcommerceRoute
-  ServicesHostingRoute: typeof ServicesHostingRoute
-  ServicesMigrationRoute: typeof ServicesMigrationRoute
-  ServicesSchedulingRoute: typeof ServicesSchedulingRoute
+  ServicesAiAgentsRoute: typeof ServicesAiAgentsRoute
+  ServicesAiIntegrationsRoute: typeof ServicesAiIntegrationsRoute
+  ServicesAutomationRoute: typeof ServicesAutomationRoute
+  ServicesDataPipelinesRoute: typeof ServicesDataPipelinesRoute
   ServicesSeoRoute: typeof ServicesSeoRoute
-  ServicesWebDesignRoute: typeof ServicesWebDesignRoute
+  ServicesWebSystemsRoute: typeof ServicesWebSystemsRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
@@ -310,11 +310,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/web-design': {
-      id: '/services/web-design'
-      path: '/services/web-design'
-      fullPath: '/services/web-design'
-      preLoaderRoute: typeof ServicesWebDesignRouteImport
+    '/services/web-systems': {
+      id: '/services/web-systems'
+      path: '/services/web-systems'
+      fullPath: '/services/web-systems'
+      preLoaderRoute: typeof ServicesWebSystemsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/seo': {
@@ -324,32 +324,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSeoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/scheduling': {
-      id: '/services/scheduling'
-      path: '/services/scheduling'
-      fullPath: '/services/scheduling'
-      preLoaderRoute: typeof ServicesSchedulingRouteImport
+    '/services/data-pipelines': {
+      id: '/services/data-pipelines'
+      path: '/services/data-pipelines'
+      fullPath: '/services/data-pipelines'
+      preLoaderRoute: typeof ServicesDataPipelinesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/migration': {
-      id: '/services/migration'
-      path: '/services/migration'
-      fullPath: '/services/migration'
-      preLoaderRoute: typeof ServicesMigrationRouteImport
+    '/services/automation': {
+      id: '/services/automation'
+      path: '/services/automation'
+      fullPath: '/services/automation'
+      preLoaderRoute: typeof ServicesAutomationRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/hosting': {
-      id: '/services/hosting'
-      path: '/services/hosting'
-      fullPath: '/services/hosting'
-      preLoaderRoute: typeof ServicesHostingRouteImport
+    '/services/ai-integrations': {
+      id: '/services/ai-integrations'
+      path: '/services/ai-integrations'
+      fullPath: '/services/ai-integrations'
+      preLoaderRoute: typeof ServicesAiIntegrationsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/ecommerce': {
-      id: '/services/ecommerce'
-      path: '/services/ecommerce'
-      fullPath: '/services/ecommerce'
-      preLoaderRoute: typeof ServicesEcommerceRouteImport
+    '/services/ai-agents': {
+      id: '/services/ai-agents'
+      path: '/services/ai-agents'
+      fullPath: '/services/ai-agents'
+      preLoaderRoute: typeof ServicesAiAgentsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -365,12 +365,12 @@ const rootRouteChildren: RootRouteChildren = {
   PortfolioRoute: PortfolioRoute,
   PricingRoute: PricingRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  ServicesEcommerceRoute: ServicesEcommerceRoute,
-  ServicesHostingRoute: ServicesHostingRoute,
-  ServicesMigrationRoute: ServicesMigrationRoute,
-  ServicesSchedulingRoute: ServicesSchedulingRoute,
+  ServicesAiAgentsRoute: ServicesAiAgentsRoute,
+  ServicesAiIntegrationsRoute: ServicesAiIntegrationsRoute,
+  ServicesAutomationRoute: ServicesAutomationRoute,
+  ServicesDataPipelinesRoute: ServicesDataPipelinesRoute,
   ServicesSeoRoute: ServicesSeoRoute,
-  ServicesWebDesignRoute: ServicesWebDesignRoute,
+  ServicesWebSystemsRoute: ServicesWebSystemsRoute,
   ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport

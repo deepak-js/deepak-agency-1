@@ -2,12 +2,22 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
+const faqs = [
+  { q: "What kinds of projects do you take on?", a: "Web systems, automations, AI integrations, internal agents, and the data pipelines that feed them. If it's a system that needs to keep running after launch, it's in scope." },
+  { q: "Which AI models do you use?", a: "We're model-agnostic. We pick the right provider for the job — OpenAI, Anthropic, Google, or open-weights — based on cost, latency, accuracy, and where your data is allowed to live." },
+  { q: "Will my data be used to train anyone's model?", a: "No. We default to provider settings and contractual terms that exclude your data from training. We document the data path so you can audit it." },
+  { q: "Do you offer ongoing support after launch?", a: "Yes. Most clients move into a lightweight partnership for monitoring, tuning, and the next round of systems. There's no lock-in." },
+  { q: "How long does a typical project take?", a: "A focused web system is 3–6 weeks. A first automation or AI integration usually lands in 4–8 weeks. Larger system roadmaps run in monthly cadences." },
+  { q: "Can you work with our existing stack?", a: "Almost certainly. We've integrated with most major CRMs, CMSs, data warehouses, and internal tools. If something is genuinely incompatible, we'll tell you on the first call." },
+  { q: "Where are you based?", a: "We're a distributed team and work async by default. We schedule deep-work calls in your time zone, not ours." },
+];
+
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "FAQ — HeisenLabs" },
-      { name: "description", content: "Frequently asked questions about working with HeisenLabs." },
-      { property: "og:title", content: "FAQ — HeisenLabs" },
+      { title: "FAQ — Heisen Labs" },
+      { name: "description", content: "Common questions about working with Heisen Labs on AI, automation, and web systems." },
+      { property: "og:title", content: "FAQ — Heisen Labs" },
       { property: "og:url", content: "/faq" },
     ],
     links: [{ rel: "canonical", href: "/faq" }],
@@ -29,19 +39,10 @@ export const Route = createFileRoute("/faq")({
   component: FaqPage,
 });
 
-const faqs = [
-  { q: "How long does a typical project take?", a: "Most websites launch in 4–8 weeks from kickoff, depending on scope, content readiness, and round-trip feedback." },
-  { q: "Do you work with clients outside your country?", a: "Yes — we've worked with teams across North America, Europe, Asia, and Australia. We schedule meetings around your timezone." },
-  { q: "Will I be able to update the site myself?", a: "Absolutely. We hand over a clear CMS setup with documentation so non-technical team members can publish and edit confidently." },
-  { q: "Do you offer ongoing support?", a: "Yes. Monthly care plans include backups, monitoring, performance tuning, and a block of hours for changes." },
-  { q: "What if I already have a designer?", a: "Happy to build only. Send us the files — we'll do a feasibility review and quote the build." },
-  { q: "How does payment work?", a: "A 50% deposit kicks the project off and the remainder is due at launch. Larger projects can be split into milestones." },
-];
-
 function FaqPage() {
   return (
     <>
-      <PageHero eyebrow="FAQ" title="Your questions, answered." />
+      <PageHero eyebrow="FAQ" title="The questions we get most." />
       <section className="mx-auto max-w-3xl px-4 pb-24 lg:px-8">
         <Accordion type="single" collapsible className="space-y-3">
           {faqs.map((f, i) => (

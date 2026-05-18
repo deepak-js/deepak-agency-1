@@ -3,8 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 const BASE_URL = "";
 
 const entries = [
-  "/", "/about", "/services", "/services/web-design", "/services/seo",
-  "/services/hosting", "/services/migration", "/services/ecommerce", "/services/scheduling",
+  "/", "/about", "/services",
+  "/services/ai-integrations", "/services/automation", "/services/web-systems",
+  "/services/seo", "/services/data-pipelines", "/services/ai-agents",
   "/portfolio", "/pricing", "/contact", "/book-a-call", "/faq", "/blog",
 ];
 
