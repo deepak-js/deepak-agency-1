@@ -1,14 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
-import { ArrowUpRight, Sparkles, Search, Wrench, Zap, ShoppingCart, CalendarClock } from "lucide-react";
+import { ArrowUpRight, Sparkles, Search, Workflow, Bot, Database, LayoutTemplate } from "lucide-react";
 
 export const Route = createFileRoute("/services/")({
   head: () => ({
     meta: [
-      { title: "Services — HeisenLabs" },
-      { name: "description", content: "Web design, SEO, hosting, migration, e-commerce, and scheduling. Pick what you need." },
-      { property: "og:title", content: "Services — HeisenLabs" },
-      { property: "og:description", content: "Everything we offer, in one place." },
+      { title: "Services — Heisen Labs" },
+      { name: "description", content: "AI integrations, automation, web systems, SEO, data pipelines, and AI agents." },
+      { property: "og:title", content: "Services — Heisen Labs" },
+      { property: "og:description", content: "The systems we build for growing businesses." },
       { property: "og:url", content: "/services" },
     ],
     links: [{ rel: "canonical", href: "/services" }],
@@ -17,18 +17,22 @@ export const Route = createFileRoute("/services/")({
 });
 
 const services = [
-  { icon: Sparkles, title: "Website Design", desc: "Bespoke designs built from scratch — never templates.", to: "/services/web-design" },
-  { icon: Search, title: "SEO", desc: "Technical and on-page SEO so the right people find you.", to: "/services/seo" },
-  { icon: Wrench, title: "Hosting & Maintenance", desc: "Monthly care plans, backups, updates, and on-call help.", to: "/services/hosting" },
-  { icon: Zap, title: "Website Migration", desc: "Move your existing site to a faster, friendlier home.", to: "/services/migration" },
-  { icon: ShoppingCart, title: "E-commerce", desc: "Online stores that load fast and convert visitors.", to: "/services/ecommerce" },
-  { icon: CalendarClock, title: "Scheduling", desc: "Booking and calendars woven into your website.", to: "/services/scheduling" },
+  { icon: Sparkles, title: "AI Integrations", desc: "LLMs and AI APIs plugged into the tools you already use.", to: "/services/ai-integrations" },
+  { icon: Workflow, title: "Automation", desc: "Workflows that quietly run the work while you sleep.", to: "/services/automation" },
+  { icon: LayoutTemplate, title: "Web Systems", desc: "Fast, accessible websites built to rank and convert.", to: "/services/web-systems" },
+  { icon: Search, title: "SEO", desc: "Technical and content SEO grounded in real intent.", to: "/services/seo" },
+  { icon: Database, title: "Data Pipelines", desc: "Ingest, transform, and report on one source of truth.", to: "/services/data-pipelines" },
+  { icon: Bot, title: "AI Agents", desc: "Internal copilots and assistants tuned to your data.", to: "/services/ai-agents" },
 ];
 
 function ServicesIndex() {
   return (
     <>
-      <PageHero eyebrow="Services" title="Pick what you need. We'll handle the rest." />
+      <PageHero
+        eyebrow="Services"
+        title="Systems, not just deliverables."
+        subtitle="We design and build the moving parts behind growing businesses — websites, workflows, and AI that actually pull their weight."
+      />
       <section className="mx-auto max-w-7xl px-4 pb-24 lg:px-8">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map(({ icon: Icon, title, desc, to }) => (

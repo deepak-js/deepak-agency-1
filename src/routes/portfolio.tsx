@@ -5,9 +5,9 @@ import { PageHero } from "@/components/site/PageHero";
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
-      { title: "Portfolio — HeisenLabs" },
-      { name: "description", content: "Selected work from HeisenLabs — websites built for startups, agencies, and global brands." },
-      { property: "og:title", content: "Portfolio — HeisenLabs" },
+      { title: "Portfolio — Heisen Labs" },
+      { name: "description", content: "Selected systems from Heisen Labs — websites, automations, and AI integrations for growing teams." },
+      { property: "og:title", content: "Portfolio — Heisen Labs" },
       { property: "og:url", content: "/portfolio" },
     ],
     links: [{ rel: "canonical", href: "/portfolio" }],
@@ -16,18 +16,22 @@ export const Route = createFileRoute("/portfolio")({
 });
 
 const projects = [
-  { name: "Calder & Bloom", tag: "Brand site · Floral atelier", hue: "from-rose-900/60 to-amber-900/40" },
-  { name: "Atlas Audio", tag: "E-commerce · Audio gear", hue: "from-slate-800/70 to-blue-900/40" },
-  { name: "Field Notes Studio", tag: "Portfolio · Photography", hue: "from-emerald-900/60 to-stone-800/40" },
-  { name: "Harbor Coffee Co.", tag: "Multi-location · F&B", hue: "from-amber-900/60 to-orange-900/40" },
-  { name: "Northbound Yoga", tag: "Booking · Wellness", hue: "from-teal-900/60 to-sky-900/40" },
-  { name: "Loomwork", tag: "Marketing site · SaaS", hue: "from-indigo-900/60 to-violet-900/40" },
+  { name: "Northwind Ops", tag: "Automation · Logistics", hue: "from-slate-800/70 to-blue-900/40" },
+  { name: "Atlas Copilot", tag: "AI agent · Internal tools", hue: "from-indigo-900/60 to-violet-900/40" },
+  { name: "Calder & Bloom", tag: "Web system · Atelier", hue: "from-rose-900/60 to-amber-900/40" },
+  { name: "Harbor Insights", tag: "Data pipeline · F&B", hue: "from-amber-900/60 to-orange-900/40" },
+  { name: "Northbound Intake", tag: "Automation · Wellness", hue: "from-teal-900/60 to-sky-900/40" },
+  { name: "Loomwork Search", tag: "AI integration · SaaS", hue: "from-emerald-900/60 to-stone-800/40" },
 ];
 
 function PortfolioPage() {
   return (
     <>
-      <PageHero eyebrow="Portfolio" title="A selection of recent work." />
+      <PageHero
+        eyebrow="Portfolio"
+        title="Selected systems."
+        subtitle="A handful of recent builds across automation, AI, and web. Names changed where the work is still under wraps."
+      />
       <section className="mx-auto max-w-7xl px-4 pb-24 lg:px-8">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p) => (

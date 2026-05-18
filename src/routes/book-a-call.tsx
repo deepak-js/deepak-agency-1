@@ -8,9 +8,9 @@ import { PageHero } from "@/components/site/PageHero";
 export const Route = createFileRoute("/book-a-call")({
   head: () => ({
     meta: [
-      { title: "Book a call — HeisenLabs" },
-      { name: "description", content: "Book a free 30-minute intro call. We'll talk through your project and outline next steps." },
-      { property: "og:title", content: "Book a call — HeisenLabs" },
+      { title: "Book a call — Heisen Labs" },
+      { name: "description", content: "Book a free 30-minute intro call. We'll talk through your system, scope, and next steps." },
+      { property: "og:title", content: "Book a call — Heisen Labs" },
       { property: "og:url", content: "/book-a-call" },
     ],
     links: [{ rel: "canonical", href: "/book-a-call" }],
@@ -49,7 +49,7 @@ function BookPage() {
       <PageHero
         eyebrow="Book a call"
         title="Free 30-minute intro call."
-        subtitle="No sales pressure. We'll talk through your goals, scope, and timing, then send a follow-up summary."
+        subtitle="No sales pressure. We'll talk through the system you want, scope it together, and send a written follow-up."
       />
       <section className="mx-auto max-w-3xl px-4 pb-24 lg:px-8">
         <form onSubmit={onSubmit} className="rounded-3xl border border-border/60 bg-card p-6 sm:p-8">
@@ -67,8 +67,8 @@ function BookPage() {
             </Field>
           </div>
           <div className="mt-4">
-            <Field label="Anything we should know?">
-              <textarea name="notes" rows={4} maxLength={2000} className={`${inputCls} resize-none`} placeholder="Project notes, links, budget range…" />
+            <Field label="What system do you want built?">
+              <textarea name="notes" rows={4} maxLength={2000} className={`${inputCls} resize-none`} placeholder="A few sentences on the workflow, site, or AI feature you have in mind…" />
             </Field>
           </div>
           <button

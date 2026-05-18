@@ -4,9 +4,9 @@ import { ServiceDetail } from "@/components/site/ServiceDetail";
 export const Route = createFileRoute("/services/seo")({
   head: () => ({
     meta: [
-      { title: "SEO — HeisenLabs" },
-      { name: "description", content: "Technical and on-page SEO that helps the right people find you." },
-      { property: "og:title", content: "SEO — HeisenLabs" },
+      { title: "SEO — Heisen Labs" },
+      { name: "description", content: "Technical and content SEO that helps the right people find you." },
+      { property: "og:title", content: "SEO — Heisen Labs" },
       { property: "og:url", content: "/services/seo" },
     ],
     links: [{ rel: "canonical", href: "/services/seo" }],
@@ -14,8 +14,8 @@ export const Route = createFileRoute("/services/seo")({
   component: () => (
     <ServiceDetail
       eyebrow="SEO"
-      title="Get seen by the people that matter."
-      subtitle="A pragmatic, no-jargon approach to search. We focus on the work that actually moves rankings."
+      title="Rank for the queries that matter."
+      subtitle="A pragmatic, no-jargon approach to search — built on technical fundamentals and content that actually answers the question."
       includes={[
         "Full technical SEO audit",
         "Keyword research grounded in real intent",

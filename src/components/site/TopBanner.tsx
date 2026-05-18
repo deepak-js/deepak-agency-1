@@ -9,12 +9,12 @@ export function TopBanner() {
     <div className="relative z-50 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2 text-xs sm:text-sm">
         <span className="inline-flex h-2 w-2 rounded-full bg-status animate-pulse" />
-        <span className="text-muted-foreground">Looking for a new website?</span>
+        <span className="text-muted-foreground">Want a system, not just a site?</span>
         <Link
           to="/contact"
           className="rounded-full border border-border/60 px-3 py-1 text-foreground transition hover:bg-accent"
         >
-          Get in touch now
+          Start a project
         </Link>
         <button
           aria-label="Dismiss"
