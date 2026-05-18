@@ -72,39 +72,39 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesWebDesignRoute = ServicesWebDesignRouteImport.update({
-  id: '/web-design',
-  path: '/web-design',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/web-design',
+  path: '/services/web-design',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesSeoRoute = ServicesSeoRouteImport.update({
-  id: '/seo',
-  path: '/seo',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/seo',
+  path: '/services/seo',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesSchedulingRoute = ServicesSchedulingRouteImport.update({
-  id: '/scheduling',
-  path: '/scheduling',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/scheduling',
+  path: '/services/scheduling',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesMigrationRoute = ServicesMigrationRouteImport.update({
-  id: '/migration',
-  path: '/migration',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/migration',
+  path: '/services/migration',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesHostingRoute = ServicesHostingRouteImport.update({
-  id: '/hosting',
-  path: '/hosting',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/hosting',
+  path: '/services/hosting',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesEcommerceRoute = ServicesEcommerceRouteImport.update({
-  id: '/ecommerce',
-  path: '/ecommerce',
-  getParentRoute: () => ServicesRoute,
+  id: '/services/ecommerce',
+  path: '/services/ecommerce',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -229,6 +229,13 @@ export interface RootRouteChildren {
   PortfolioRoute: typeof PortfolioRoute
   PricingRoute: typeof PricingRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ServicesEcommerceRoute: typeof ServicesEcommerceRoute
+  ServicesHostingRoute: typeof ServicesHostingRoute
+  ServicesMigrationRoute: typeof ServicesMigrationRoute
+  ServicesSchedulingRoute: typeof ServicesSchedulingRoute
+  ServicesSeoRoute: typeof ServicesSeoRoute
+  ServicesWebDesignRoute: typeof ServicesWebDesignRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -298,52 +305,52 @@ declare module '@tanstack/react-router' {
     }
     '/services/': {
       id: '/services/'
-      path: '/'
+      path: '/services'
       fullPath: '/services/'
       preLoaderRoute: typeof ServicesIndexRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/services/web-design': {
       id: '/services/web-design'
-      path: '/web-design'
+      path: '/services/web-design'
       fullPath: '/services/web-design'
       preLoaderRoute: typeof ServicesWebDesignRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/services/seo': {
       id: '/services/seo'
-      path: '/seo'
+      path: '/services/seo'
       fullPath: '/services/seo'
       preLoaderRoute: typeof ServicesSeoRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/services/scheduling': {
       id: '/services/scheduling'
-      path: '/scheduling'
+      path: '/services/scheduling'
       fullPath: '/services/scheduling'
       preLoaderRoute: typeof ServicesSchedulingRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/services/migration': {
       id: '/services/migration'
-      path: '/migration'
+      path: '/services/migration'
       fullPath: '/services/migration'
       preLoaderRoute: typeof ServicesMigrationRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/services/hosting': {
       id: '/services/hosting'
-      path: '/hosting'
+      path: '/services/hosting'
       fullPath: '/services/hosting'
       preLoaderRoute: typeof ServicesHostingRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/services/ecommerce': {
       id: '/services/ecommerce'
-      path: '/ecommerce'
+      path: '/services/ecommerce'
       fullPath: '/services/ecommerce'
       preLoaderRoute: typeof ServicesEcommerceRouteImport
-      parentRoute: typeof ServicesRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -358,6 +365,13 @@ const rootRouteChildren: RootRouteChildren = {
   PortfolioRoute: PortfolioRoute,
   PricingRoute: PricingRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ServicesEcommerceRoute: ServicesEcommerceRoute,
+  ServicesHostingRoute: ServicesHostingRoute,
+  ServicesMigrationRoute: ServicesMigrationRoute,
+  ServicesSchedulingRoute: ServicesSchedulingRoute,
+  ServicesSeoRoute: ServicesSeoRoute,
+  ServicesWebDesignRoute: ServicesWebDesignRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
