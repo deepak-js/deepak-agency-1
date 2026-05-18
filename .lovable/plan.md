@@ -1,79 +1,74 @@
 
-# HeisenLabs — Squarespace-style Web Design Agency Site
+# Rebrand to Heisen Labs — AI & Automation Studio
 
-A multi-page marketing site for **HeisenLabs**, modeled structurally on bycrawford.com (dark moody hero, sticky top bar notification, side-by-side hero + contact form, services grid, portfolio, pricing, testimonials, floating "Book a call" widget). All copy and imagery will be original.
+Shift the site's positioning from a Squarespace-style web design agency to **Heisen Labs**: a boutique AI and automation studio. Update copy, services, and meta everywhere; keep the dark cinematic visual system. Also distance further from bycrawford.com by removing layout/copy patterns that too closely mirror it.
 
-## Pages (routes)
+## Brand foundation (applied site-wide)
+
+- **Name**: Heisen Labs (two words, not "HeisenLabs")
+- **Tagline**: "The systems behind business growth."
+- **Story line**: "Named after the Heisenberg principle — the right system doesn't just observe your business, it changes it."
+- **Pillars**: Websites that rank · Workflows that run overnight · AI integrations that actually work
+
+## Service lineup (replace current six)
 
 ```
-/                  Home — hero + inline contact form + services preview + portfolio teaser + testimonials
-/about             Founder story, awards/badges, process
-/services          Overview grid linking to each service
-/services/web-design
-/services/seo
-/services/hosting
-/services/migration
-/services/ecommerce
-/services/scheduling
-/portfolio         Project grid with case-study cards
-/pricing           Tiered pricing table + FAQ accordion
-/contact           Full contact form + alt channels
-/book-a-call       Calendar embed placeholder + intake form
-/faq               Accordion of common questions
-/blog              Stub index (empty state) — listed in nav
+/services/ai-integrations     LLM + API wiring into existing tools
+/services/automation          n8n / Zapier / custom workflows, overnight jobs
+/services/web-systems         High-performance sites built to rank
+/services/seo                 Technical + content SEO
+/services/data-pipelines      ETL, dashboards, internal data plumbing
+/services/ai-agents           Custom assistants, RAG, internal copilots
 ```
 
-Each route gets its own `head()` with unique title + og tags.
+Delete: `services.hosting.tsx`, `services.migration.tsx`, `services.ecommerce.tsx`, `services.scheduling.tsx`, `services.web-design.tsx`.
+Keep + retitle: `services.seo.tsx`.
+Add: 5 new service detail files using existing `ServiceDetail` component.
+Update `services.index.tsx` grid and `SiteFooter` services column.
 
-## Design system
+## Copy rewrites (per route)
 
-Dark theme, cinematic. Defined in `src/styles.css` via oklch tokens.
+- **`/` (Home)**: New hero headline + subhead about systems, not just websites. Replace "Squarespace experts" framing. New 3-up pillars section (Websites/Workflows/AI), services preview pointing at new routes, testimonials reworded as automation/AI outcomes.
+- **`/about`**: Founder/studio story explicitly invoking the Heisenberg principle line. Drop "small design studio" framing.
+- **`/services`**: New intro + 6 new cards.
+- **`/portfolio`**: Reframe case-study cards as automation/AI/web systems (placeholder projects).
+- **`/pricing`**: Retier around Starter (site) / Systems (site + automations) / Studio (ongoing AI partner).
+- **`/contact`, `/book-a-call`**: Update subject options and intake copy ("What system do you want built?").
+- **`/faq`**: New Q&A focused on AI/automation scope, data handling, model choice.
+- **`/blog`**: Empty-state copy updated.
 
-- **Background**: near-black with subtle blue light-leak gradient
-- **Foreground / muted**: off-white, soft slate
-- **Primary** (CTAs / accent dot): muted steel-blue
-- **Surface**: translucent dark card with soft border
-- **Form card**: light cream/off-white panel floating over the dark hero
-- **Typography**: serif display for headings (e.g. Instrument Serif / Fraunces), clean sans for body (Inter)
-- **Motifs**: thin laurel/award badges, status-dot ("● Available for work"), pill buttons with arrow icon, rotating circular "Start a project" stamp
+## Meta + SEO
 
-## Key components
+- `__root.tsx`: new default title `Heisen Labs — AI & automation studio`, new description, `og:site_name: "Heisen Labs"`.
+- Every route `head()`: rewrite title + description to match new positioning.
+- `sitemap[.]xml.ts`: update path list to new service slugs.
 
-- `SiteHeader` — logo left, nav center, "Schedule a call" pill right; mobile sheet menu
-- `TopBanner` — sticky top notification bar with dismiss (×)
-- `Hero` — left column copy + dual CTA + awards row; right column floating contact form card
-- `ContactForm` — Name, Email, Subject (select), Message → server fn → DB insert + toast
-- `ServicesGrid`, `PortfolioGrid`, `PricingTable`, `Testimonials`, `FaqAccordion`
-- `BookCallWidget` — fixed bottom-right floating card ("Book A Call / Get started today")
-- `SiteFooter`
+## Visual / chrome (light touch, no redesign)
 
-## Backend (Lovable Cloud)
+- `SiteHeader` logo: `Heisen Labs` (drop the italic "by " prefix that echoes bycrawford).
+- `SiteFooter` logo + tagline updated.
+- `TopBanner`: change "Looking for a new website?" → "Want a system, not just a site?"
+- `BookCallWidget`: avatar letter `H`, label unchanged.
+- Rotating "Start a project" stamp text kept.
+- Keep dark theme, oklch tokens, Instrument Serif + Inter — no token changes.
 
-Enable Lovable Cloud. Create two tables with RLS (insert open to anon, select restricted to authenticated/admin only):
+## De-risk vs. bycrawford.com
 
-- `contact_submissions` (id, name, email, subject, message, created_at)
-- `call_bookings` (id, name, email, preferred_date, notes, created_at)
+- Replace the side-by-side hero-with-floating-contact-form layout on `/` with a single-column hero + CTA pair; move the inline contact form into its own band below the pillars.
+- Reword any phrases that paralleled the source ("Looking for a new website?", "Available for work" dot, "Schedule a call" pill copy) to original phrasing.
+- All testimonials, project titles, and FAQ wording written fresh.
 
-Server functions in `src/lib/`:
-- `submitContact.functions.ts` — Zod-validated insert via `supabaseAdmin`
-- `bookCall.functions.ts` — Zod-validated insert
+## Out of scope
 
-UI feedback: shadcn `sonner` toasts for success/error notifications.
-
-## Out of scope / placeholders
-
-- Real portfolio imagery — use generated/placeholder images you can swap
-- Real testimonials — placeholder names + headshots
-- Calendar booking — intake form only; embed slot left for Cal.com/Acuity later
-- Blog content — empty state with "Coming soon"
+- No database schema changes (`contact_submissions`, `call_bookings` keep working).
+- No new dependencies. No new design tokens.
+- Real portfolio assets, real testimonials, real calendar — still placeholders.
 
 ## Technical notes
 
-- TanStack Start file-based routing under `src/routes/`
-- Each route file declares its own `head()` meta
-- `sitemap.xml` server route enumerating all pages
-- `robots.txt` allowing all
-- Zod validation client + server; length limits on all inputs
-- All colors via semantic tokens, no hardcoded hex in components
+- Files touched: `__root.tsx`, `index.tsx`, `about.tsx`, `portfolio.tsx`, `pricing.tsx`, `contact.tsx`, `book-a-call.tsx`, `faq.tsx`, `blog.tsx`, `services.index.tsx`, `services.seo.tsx`, `sitemap[.]xml.ts`, `SiteHeader.tsx`, `SiteFooter.tsx`, `TopBanner.tsx`, `BookCallWidget.tsx`, `ContactForm.tsx` (subject options).
+- Files created: `services.ai-integrations.tsx`, `services.automation.tsx`, `services.web-systems.tsx`, `services.data-pipelines.tsx`, `services.ai-agents.tsx`.
+- Files deleted: `services.hosting.tsx`, `services.migration.tsx`, `services.ecommerce.tsx`, `services.scheduling.tsx`, `services.web-design.tsx`.
+- `routeTree.gen.ts` regenerates automatically.
 
 Ready to build on approval.
