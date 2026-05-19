@@ -1,25 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { X } from "lucide-react";
+import { X, Sparkles } from "lucide-react";
 
 export function TopBanner() {
   const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("hl-banner-dismissed") === "1") setOpen(false);
+    } catch { /* ignore */ }
+  }, []);
+
+  function dismiss() {
+    setOpen(false);
+    try { localStorage.setItem("hl-banner-dismissed", "1"); } catch { /* ignore */ }
+  }
+
   if (!open) return null;
   return (
-    <div className="relative z-50 border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2 text-xs sm:text-sm">
-        <span className="inline-flex h-2 w-2 rounded-full bg-status animate-pulse" />
+    <div className="relative z-50 border-b border-border/40 bg-surface/60 backdrop-blur">
+      <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-10 py-2 text-xs sm:text-sm">
+        <Sparkles className="h-3.5 w-3.5 text-amber-accent" />
         <span className="text-muted-foreground">Want a system, not just a site?</span>
         <Link
-          to="/contact"
+          to="/book-a-call"
           className="rounded-full border border-border/60 px-3 py-1 text-foreground transition hover:bg-accent"
         >
-          Start a project
+          Book a free call
         </Link>
         <button
-          aria-label="Dismiss"
-          onClick={() => setOpen(false)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          aria-label="Dismiss banner"
+          onClick={dismiss}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition hover:text-foreground"
         >
           <X className="h-4 w-4" />
         </button>
