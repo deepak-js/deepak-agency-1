@@ -63,10 +63,6 @@ function HomePage() {
             <span className="inline-flex h-2 w-2 rounded-full bg-status animate-pulse" />
             <span className="text-muted-foreground">Now booking — Q3 systems · 2 slots open</span>
           </div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3 py-1 text-xs animate-fade-in-up">
-            <span className="inline-flex h-2 w-2 rounded-full bg-status animate-pulse" />
-            <span className="text-muted-foreground">Now booking — Q3 systems · 2 slots open</span>
-          </div>
 
           <h1 className="mt-7 fluid-display text-serif text-gradient animate-fade-in-up" style={{ animationDelay: "60ms" }}>
             The systems behind <em className="text-aurora not-italic">business growth.</em>
