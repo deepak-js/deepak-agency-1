@@ -56,8 +56,13 @@ function HomePage() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-hero">
+        <HeroBackdrop />
         <div aria-hidden className="absolute inset-0 bg-grid opacity-60" />
         <div className="relative mx-auto max-w-5xl px-4 py-28 text-center lg:px-8 lg:py-36">
+          <div data-cursor="view" className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3 py-1 text-xs animate-fade-in-up">
+            <span className="inline-flex h-2 w-2 rounded-full bg-status animate-pulse" />
+            <span className="text-muted-foreground">Now booking — Q3 systems · 2 slots open</span>
+          </div>
           <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3 py-1 text-xs animate-fade-in-up">
             <span className="inline-flex h-2 w-2 rounded-full bg-status animate-pulse" />
             <span className="text-muted-foreground">Now booking — Q3 systems · 2 slots open</span>
