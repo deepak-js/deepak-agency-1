@@ -14,6 +14,9 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { TopBanner } from "@/components/site/TopBanner";
 import { BookCallWidget } from "@/components/site/BookCallWidget";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { CustomCursor } from "@/components/site/CustomCursor";
+import { PageTransition } from "@/components/site/PageTransition";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -114,11 +117,15 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[70] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground">Skip to content</a>
       <ScrollProgress />
+      <SmoothScroll />
+      <CustomCursor />
       <div className="min-h-screen flex flex-col">
         <TopBanner />
         <SiteHeader />
         <main id="main" className="flex-1">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
         <SiteFooter />
         <BookCallWidget />

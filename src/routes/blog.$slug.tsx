@@ -66,11 +66,11 @@ function BlogPostPage() {
       <article className="mx-auto max-w-2xl px-4 py-20 lg:px-8">
         <p className="text-xl leading-relaxed text-foreground/90 sm:text-2xl">{post.excerpt}</p>
         <div className="mt-12 space-y-12">
-          {post.body.map((section) => (
+          {post.body.map((section: { heading: string; paragraphs: string[] }) => (
             <section key={section.heading}>
               <h2 className="text-serif text-3xl text-foreground">{section.heading}</h2>
               <div className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground">
-                {section.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                {section.paragraphs.map((p: string, i: number) => <p key={i}>{p}</p>)}
               </div>
             </section>
           ))}
