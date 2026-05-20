@@ -14,6 +14,9 @@ import { SiteFooter } from "@/components/site/SiteFooter";
 import { TopBanner } from "@/components/site/TopBanner";
 import { BookCallWidget } from "@/components/site/BookCallWidget";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { CustomCursor } from "@/components/site/CustomCursor";
+import { PageTransition } from "@/components/site/PageTransition";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
