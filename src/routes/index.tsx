@@ -8,6 +8,7 @@ import { LogoMarquee } from "@/components/site/LogoMarquee";
 import { ProcessTimeline } from "@/components/site/ProcessTimeline";
 import { MetricsBand } from "@/components/site/MetricsBand";
 import { TestimonialCarousel } from "@/components/site/TestimonialCarousel";
+import { HeroBackdrop } from "@/components/site/HeroBackdrop";
 
 export const Route = createFileRoute("/")({
   head: () => ({
