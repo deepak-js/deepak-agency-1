@@ -17,6 +17,9 @@ import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
 import { CustomCursor } from "@/components/site/CustomCursor";
 import { PageTransition } from "@/components/site/PageTransition";
+import { GuidedTour } from "@/components/site/GuidedTour";
+import { AmbientAudio } from "@/components/site/AmbientAudio";
+import { ParticleTrail } from "@/components/site/ParticleTrail";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -151,6 +154,7 @@ function RootComponent() {
       <ScrollProgress />
       <SmoothScroll />
       <CustomCursor />
+      <ParticleTrail />
       <div className="min-h-screen flex flex-col">
         <TopBanner />
         <SiteHeader />
@@ -161,6 +165,8 @@ function RootComponent() {
         </main>
         <SiteFooter />
         <BookCallWidget />
+        <AmbientAudio />
+        <GuidedTour />
         <Toaster theme="dark" position="bottom-center" richColors />
       </div>
     </QueryClientProvider>
