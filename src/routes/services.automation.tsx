@@ -7,6 +7,7 @@ export const Route = createFileRoute("/services/automation")({
       { title: "Automation — Heisen Labs" },
       { name: "description", content: "Workflows that quietly run the work while you sleep." },
       { property: "og:title", content: "Automation — Heisen Labs" },
+      { property: "og:description", content: "Heisen Labs — boutique AI and automation studio." },
       { property: "og:url", content: "/services/automation" },
     ],
     links: [{ rel: "canonical", href: "/services/automation" }],

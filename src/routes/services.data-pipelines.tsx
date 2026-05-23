@@ -7,6 +7,7 @@ export const Route = createFileRoute("/services/data-pipelines")({
       { title: "Data Pipelines — Heisen Labs" },
       { name: "description", content: "Ingest, transform, and report on one source of truth." },
       { property: "og:title", content: "Data Pipelines — Heisen Labs" },
+      { property: "og:description", content: "Heisen Labs — boutique AI and automation studio." },
       { property: "og:url", content: "/services/data-pipelines" },
     ],
     links: [{ rel: "canonical", href: "/services/data-pipelines" }],
