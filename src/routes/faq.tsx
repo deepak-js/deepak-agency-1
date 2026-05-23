@@ -44,6 +44,16 @@ const groups = [
       { q: "Do you sign NDAs?", a: "Yes, mutual NDAs are standard before scoping calls. We can sign yours or send ours." },
       { q: "Are you SOC 2 compliant?", a: "We follow SOC 2-aware practices internally. We're happy to complete your vendor security questionnaire and align with your controls." },
       { q: "Where does customer data live?", a: "By default in your tenant, your warehouse, or your cloud. We don't centralize client data on our side unless explicitly contracted." },
+      { q: "How do you handle secrets and API keys?", a: "Secrets live in your secret manager (1Password, Doppler, AWS Secrets Manager, or your cloud-native equivalent). We never paste keys into chat, code comments, or shared docs." },
+    ],
+  },
+  {
+    title: "Pricing & Process",
+    items: [
+      { q: "How is pricing structured?", a: "Fixed-price for scoped projects, monthly retainer for studio engagements. We send a written proposal with a price ceiling — no time-and-materials surprises." },
+      { q: "What's a typical first month look like?", a: "Week 1: scoping and metric definition. Weeks 2–3: build against a real eval set. Week 4: launch behind a flag, instrument, and start tuning." },
+      { q: "Do you replace our existing team?", a: "No. We work alongside in-house teams as a force multiplier — we ship the system, document it, and hand off cleanly." },
+      { q: "What if the project doesn't work?", a: "We instrument from day one. If a system isn't moving its target metric after the first measurement cycle, we revise the approach at no extra cost." },
     ],
   },
 ];
