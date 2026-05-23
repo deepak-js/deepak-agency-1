@@ -36,10 +36,10 @@ export function Reveal({
     return () => io.disconnect();
   }, []);
 
-  const Comp = Tag as React.ElementType;
+  const Comp = Tag as unknown as React.ElementType;
   return (
     <Comp
-      ref={ref as never}
+      ref={ref}
       className={`reveal ${visible ? "is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
