@@ -1,113 +1,152 @@
-# Heisen Labs — Immersive Experience Layer
+# Phase 3 Plan — Validate, Harden, then Ship Experimental Layer
 
-A phased plan to layer a premium, interactive 3D/motion experience on top of the existing Heisen Labs site without breaking SSR, accessibility, or the Cloudflare Worker runtime that hosts it.
+Before adding more 3D, we lock the foundation: functional QA across every page, an admin/data integrity pass, and a full SEO/AEO/LLM-discoverability audit. Then we ship Phase 3 experimental features behind capability gates.
 
-## Guiding constraints
+---
 
-- **Runtime**: TanStack Start on Cloudflare Workers. All 3D/audio is client-only — gated behind `useEffect` / dynamic `import()` so SSR + the sandbox preview (no `navigator.gpu`, no WebGL2 in some headless contexts) never crash.
-- **Perf budget per route**: JS ≤ 250KB gz initial, LCP < 2.0s on 4G/mid mobile, INP < 200ms, 60fps desktop / 30–45fps mid mobile, ≤ 80MB GPU memory.
-- **Fallback contract**: every immersive feature ships with a static/CSS fallback chosen by a `useDeviceCapability()` hook (probes `navigator.hardwareConcurrency`, `deviceMemory`, `matchMedia('(prefers-reduced-motion)')`, WebGL/WebGPU support, save-data, connection).
-- **A11y**: nothing critical lives only in the 3D layer; reduced-motion disables parallax, camera flights, marquees, and scroll-driven Three.js (swap to poster image).
+## Part A — Functional QA & Validation Pass
 
-## Foundational design system upgrades (Phase 0)
+### A1. Navigation & link audit
+- Walk every route (`/`, `/about`, `/services` + 6 sub-routes, `/portfolio`, `/pricing`, `/blog` + `$slug`, `/faq`, `/contact`, `/book-a-call`, `/privacy`, `/terms`) in `SiteHeader`, `SiteFooter`, mega-menu, and inline CTAs.
+- Verify every `<Link to="…">` resolves, no dead anchors, and active states render.
+- Check breadcrumbs and cross-page interlinking (services ↔ portfolio ↔ blog ↔ contact).
+- Mobile menu open/close, keyboard nav, focus trap, ESC to close.
 
-Already partially in place — formalize before adding 3D:
+### A2. Forms end-to-end
+- **ContactForm** → `contact_submissions` insert; success + error toasts; field validation.
+- **BookCallWidget** (3-step funnel) → `call_bookings` insert with goal + details.
+- **NewsletterForm** → `contact_submissions` insert (or dedicated table) with `subject: "newsletter"`.
+- Verify rows appear via `supabase--read_query` after each test submission.
+- RLS: confirm anon insert works, anon select blocked.
 
-- **Tokens (`src/styles.css`)**: lock 8-step type ramp via `clamp()`, a 4px spacing scale (`--space-1` … `--space-12`), elevation tokens (`--shadow-sm/md/lg/glow/inset`), radius scale, motion tokens (`--ease-out-expo`, `--dur-fast: 160ms`, `--dur-base: 280ms`, `--dur-slow: 520ms`, `--dur-cinematic: 1200ms`), and z-index scale.
-- **Typography**: Instrument Serif (display) + Inter (body) + JetBrains Mono (eyebrow/metric). Fluid headings with `clamp(2.25rem, 4vw + 1rem, 5.5rem)`.
-- **Layout grid**: 12-col on ≥1024, 8-col tablet, 4-col mobile; gutters via `clamp(16px, 2vw, 32px)`; section rhythm `clamp(64px, 8vw, 160px)`.
-- **Motion principles**: enter = fade-in-up 280ms ease-out-expo; exit = 160ms ease-in; hover = 120ms; cinematic = ≥800ms, used sparingly. All gated by `prefers-reduced-motion`.
-- **Interaction states**: hover / focus-visible (2px primary ring + 4px offset) / active / disabled / loading (shimmer) / success / error. Documented per primitive.
-- **Responsive architecture**: mobile-first; container queries on cards; `content-visibility: auto` on offscreen sections; `loading="lazy"` + `decoding="async"` on non-LCP images.
+### A3. Admin / data visibility
+- No admin dashboard exists yet. Add a minimal protected `/admin` route (under `_authenticated` layout) listing recent `contact_submissions` and `call_bookings` via `createServerFn` + `requireSupabaseAuth`, with a `has_role` check (new `user_roles` table + `app_role` enum + `has_role()` security-definer function).
+- Add login page (email/password + Google via Lovable broker; call `configure_social_auth`).
+- Confirm data integrity: created_at ordering, no PII leakage to anon.
 
-## Phase 1 — Core MVP (high impact, low risk)
+### A4. Responsive & cross-device
+- Test viewports: 1920, 1366, 1024, 820, 414, 360 via browser tools.
+- Check Phase 1/2 features degrade: cursor hidden on touch, Lenis disabled on touch + reduced-motion, R3F hero swaps to poster on tier-1.
+- Verify `prefers-reduced-motion`: no parallax, no marquee, no camera flights.
 
-Ship these on every device. They define the "premium" baseline.
+### A5. Performance & regression
+- Run `browser--performance_profile` on `/`, `/portfolio`, `/services/ai-agents`.
+- Confirm JS budget ≤ 250KB gz/route; hero R3F lazy-loaded (not in initial chunk).
+- Lighthouse-style checks: LCP < 2.0s, INP < 200ms, CLS < 0.1.
+- Console + network: no 404s, no hydration mismatches, no uncaught errors.
 
-1. **Smooth scroll + scroll progress** — Lenis (~4KB) wrapping the existing `ScrollProgress`. Disabled on touch + reduced-motion.
-2. **Scroll-triggered reveals & timelines** — GSAP + ScrollTrigger (already conceptually present via `Reveal`); upgrade to staggered headline splits, pinned section transitions on Home/About.
-3. **Custom cursor** — magnetic dot + ring follower, snaps to `[data-cursor="link|view|drag"]`. Hidden on touch and reduced-motion; never replaces native focus ring.
-4. **Micro-interactions** — button shine on hover, magnetic CTAs, numeric counters (`MetricsBand` already), accordion springs, image reveal masks.
-5. **Page transitions** — fade + 8px lift via TanStack Router's `<Outlet>` + a `framer-motion` `AnimatePresence` wrapper at root (mode="wait"), 240ms.
-6. **Cinematic typography moments** — char-by-char reveal on hero headline using a tiny custom splitter (avoid SplitText license).
-7. **Foundational a11y/perf gates** — `useDeviceCapability()` hook, `<ReducedMotion>` boundary, `<ClientOnly>` wrapper, route-level `head()` with preloads.
+---
 
-**Stack**: GSAP + ScrollTrigger, Lenis, framer-motion (already implied), no 3D yet. Total added JS ≈ 60KB gz.
+## Part B — SEO / AEO / LLM Discoverability Audit
 
-## Phase 2 — Enhanced immersive (3D, shaders, audio)
+### B1. Technical SEO
+- **Per-route `head()`**: confirm unique title (<60 chars), description (<160 chars), og:title, og:description, og:url on every route. Add where missing.
+- **Canonical**: leaf-only `<link rel="canonical">` (not root — avoid TanStack dedup bug).
+- **`sitemap.xml`**: regenerate to include all current routes + dynamic blog slugs from `blog-posts.ts`.
+- **`robots.txt`**: ensure `Allow: /` + sitemap reference once domain is set.
+- **Single H1 per page**, semantic landmarks (`<main>`, `<nav>`, `<footer>`), alt text on every image.
+- **Internal linking**: each service page links to ≥2 related services + portfolio case studies + contact CTA.
 
-Gated behind capability checks; desktop + capable tablets get the full experience, others get Phase-1 fallbacks.
+### B2. Structured data (JSON-LD)
+- Root: `Organization` + `WebSite` with `SearchAction`.
+- `/`: add `Service` items for the 6 service pillars.
+- Service pages: `Service` schema with `provider`, `areaServed`, `offers`.
+- `/portfolio/$slug` modal context → `CreativeWork` / `CaseStudy`.
+- Blog posts: `Article` with headline, datePublished, author, image.
+- `/faq`: `FAQPage` with each Q&A as `mainEntity`.
+- `/pricing`: `Product` + `Offer` per tier.
+- `/contact`, `/book-a-call`: `ContactPage` + `LocalBusiness` if applicable.
+- Deep routes: `BreadcrumbList`.
 
-1. **Hero 3D scene** — React Three Fiber + drei. A slowly drifting low-poly "system graph" (instanced nodes + lines) reacting to mouse via `useFrame` + damped lerp. Dynamic-imported, suspense-boundaried, capped at DPR 1.5, frameloop="demand" when offscreen.
-2. **Custom shader background** — single full-screen `shaderMaterial` aurora (noise + flow) behind hero. ~80 lines of GLSL, runs at half-res with `<EffectComposer>`-free pipeline to keep cost low.
-3. **Scroll-driven Three.js sequence** — pinned section on Home tying scroll progress to camera dolly + node bloom. Uses GSAP ScrollTrigger to drive a single shared timeline (one rAF source, not two).
-4. **Service-page 3D glyphs** — one small R3F canvas per service hero (instanced primitives, ≤ 2k tris), shared `<Canvas>` via `eventSource` portal where possible.
-5. **Camera flight on `/portfolio` case study open** — modal opens with a 1.2s ease-in-out-cubic camera move + DOM crossfade.
-6. **3D object projection / screen-projection effect** — drei `<MeshTransmissionMaterial>` for a hero glass shard; cheap approximation, not full refraction stack.
-7. **Reactive sound design** — Web Audio API. Low-volume ambient pad (looped, < 80KB ogg) + UI clicks/hovers. Off by default; persistent unmute toggle in header; respects `prefers-reduced-motion` and autoplay policy (starts only after first user gesture).
-8. **Trajectory-based motion** — bezier-driven element flights (e.g. testimonial cards arcing in) via GSAP `MotionPathPlugin`.
+### B3. Social / Open Graph
+- og:type per route (`website` default, `article` for blog).
+- og:image: only where a real image exists; otherwise omit (no generic placeholders).
+- Twitter card meta (`twitter:card="summary_large_image"`) on routes with og:image.
 
-**Stack**: `three`, `@react-three/fiber`, `@react-three/drei`, `gsap` (+ScrollTrigger, MotionPath), `tone` or raw Web Audio. Added JS ≈ 180KB gz, lazy-loaded — never on initial Home paint.
+### B4. AEO / LLM discoverability
+- **Answer-first copy**: each service page opens with a 1-sentence direct answer to "What is X / what does Heisen Labs do for X?" before marketing prose.
+- **FAQ density**: expand `/faq` to ≥12 high-intent questions with concise, citation-friendly answers; mirror key Q&As inline on service pages with `FAQPage` schema.
+- **Semantic chunking**: every section gets an `id` and a clear H2 phrased as a question or noun phrase (LLM crawlers chunk by heading).
+- **Author/entity signals**: add `author` + `sameAs` (LinkedIn, GitHub, X) on root Organization JSON-LD.
+- **`llms.txt`** at `/llms.txt` (server route) summarizing the brand, services, and key URLs in markdown for LLM crawlers (emerging convention).
+- **Clear pricing in text** (not images) so LLMs can quote it.
 
-**Perf rules**:
-- One `<Canvas>` per visible section max; `frameloop="demand"` + IntersectionObserver to pause offscreen.
-- DPR clamp `[1, 1.5]`; no antialias on mobile; `powerPreference: "high-performance"`.
-- Instancing for any repeated geometry; merge static meshes.
-- No postprocessing on mobile; bloom only if `deviceMemory ≥ 8`.
-- Texture budget: ≤ 2× 1024² compressed (KTX2 if we add `gltf-transform`).
+### B5. Core Web Vitals
+- Preload LCP image per route (hero poster) via `head().links`.
+- Defer R3F + GSAP + Lenis to post-LCP; `<HeroBackdrop>` mounts after first paint.
+- `content-visibility: auto` on offscreen sections.
+- Font: `display: swap` on Instrument Serif + Inter; preload only the display weight.
+- Image formats: WebP/AVIF for portfolio thumbnails.
 
-## Phase 3 — Experimental (validate before committing)
+### B6. Crawlability
+- No `noindex` anywhere except `/admin`.
+- Verify all routes return 200; no client-only redirects on indexable URLs.
+- Add `<link rel="alternate" hreflang="en">` if multi-locale considered later (skip for now).
 
-Each item gets a 1–2 day spike + measured Lighthouse/INP delta before promotion to Phase 2.
+---
 
-| Feature | Feasible? | Risk | Recommendation |
-|---|---|---|---|
-| **360° product/environment configurator** | Yes for a single hero scene | Asset weight (HDRI ≥ 1MB), GPU on mobile | Build only if a real product exists; otherwise a faked "drag-to-rotate" hero shard is 90% of the wow at 10% of the cost |
-| **Spline-imported scenes** | Yes via `@splinetool/react-spline` | +200KB runtime, opaque perf, harder to optimize than hand-rolled R3F | Use Spline only for one-off marketing moments; prefer R3F for anything recurring |
-| **WebGPU compute shaders** | Partial — Safari support landed 2024 but spotty; sandbox preview has no GPU adapter | Hard fallback required | Defer; revisit when >85% support. Build WebGL2 first, feature-detect WebGPU as enhancement |
-| **Spatial audio (HRTF panning)** | Yes via Web Audio `PannerNode` | Easy to feel gimmicky; mobile autoplay rules | Limit to 2–3 UI cues with subtle stereo pan; no positional audio tied to scroll |
-| **Cinematic guided tours** (auto camera flythrough of services) | Yes | Long animations hurt INP and feel slow on repeat visits | Make skippable, ≤ 6s, play once per session (localStorage) |
-| **Physics-based cursor trails** (rapier/cannon) | Yes but heavy | +150KB, CPU cost | Replace with GPU particle trail in a shader — cheaper, prettier |
+## Part C — Phase 3 Experimental Implementation
 
-## Per-feature feasibility matrix
+Ship only after A + B are green. Each spike: build → measure → keep or drop.
 
-| Feature | Feasibility | Perf cost | Compat | Stack | Fallback |
-|---|---|---|---|---|---|
-| Scroll-driven R3F | High | Med-High | WebGL2 ~98% | R3F + GSAP ScrollTrigger | Static SVG aurora |
-| Custom GLSL shaders | High | Low–Med | Universal WebGL2 | `shaderMaterial` (drei) | CSS gradient + noise PNG |
-| Mouse-reactive 3D | High | Low | WebGL2 | R3F + damped lerp | CSS parallax on pointer |
-| Custom cursor | High | Negligible | Desktop only | Vanilla + GSAP | Native cursor |
-| Camera flights | High | Low | WebGL2 | GSAP timeline on `camera` | DOM crossfade |
-| Spatial audio | Med | Low | All modern; needs gesture | Web Audio API | Muted by default |
-| 360° configurator | Med | High | Desktop strong, mobile OK | R3F + drei `<OrbitControls>` | Image sequence on mobile |
-| Screen-projection / transmission | Med | High (refraction) | WebGL2 | drei `<MeshTransmissionMaterial>` | Frosted-glass CSS |
-| Trajectory motion | High | Low | All | GSAP MotionPath | Straight tween |
-| Smooth scroll | High | Low | All non-touch | Lenis | Native scroll |
+### C1. Promoted to ship
+1. **Cinematic guided tour** (skippable, ≤6s, once per session via localStorage) — auto camera flight across hero R3F scene introducing the 3 service pillars.
+2. **Subtle spatial audio** — 2 UI cues (hover, success) with light stereo pan via Web Audio `PannerNode`; muted by default, persistent toggle in header.
+3. **GPU particle cursor trail** (replacing physics-based) — shader-driven trail on `tier-3` only.
 
-## Performance & fallback strategy
+### C2. Spike & measure (keep if INP delta < 30ms, JS delta < 40KB gz)
+4. **Spline hero variant** for `/` A/B — measure vs hand-rolled R3F; keep only if wow justifies +200KB.
+5. **WebGPU enhancement path** — feature-detect `navigator.gpu`; if present, swap shader backdrop to WebGPU compute version; WebGL2 stays default.
+6. **Drag-to-rotate hero shard** (faked 360° configurator) using `<MeshTransmissionMaterial>` already in Phase 2.
 
-- **Capability tiers**: `tier-3` (desktop, ≥8GB, WebGL2 + hardware concurrency ≥ 8) → full Phase 2. `tier-2` (modern tablet/laptop) → Phase 2 without postprocessing + DPR 1. `tier-1` (mobile, low-end, save-data, reduced-motion) → Phase 1 only.
-- **Budgets enforced in CI** via `size-limit` on the route chunks; fail build if hero route > 250KB gz initial.
-- **Monitoring hook**: tiny `usePerfWatchdog()` measuring rolling FPS via `requestAnimationFrame` deltas — if < 30fps for 2s, downgrade tier live (lower DPR, disable shader bg).
-- **SSR safety**: every 3D/audio import goes through `const Hero3D = lazy(() => import('./Hero3D.client'))` + `<Suspense fallback={<HeroPoster />}>`. Files suffixed `.client.tsx` are never touched during SSR.
+### C3. Dropped (documented, not built)
+- Real 360° product configurator — no real product asset.
+- Physics cursor (rapier) — replaced by GPU particle approach.
+- Positional audio tied to scroll — gimmicky, hurts INP.
 
-## Risks
+---
 
-- **Worker bundle bloat**: three/R3F must be in the client chunk only — verify via build analysis; never import them in a server function or `__root.tsx` head.
-- **Sandbox preview has no GPU** — code must compile and degrade, not crash. Wrap WebGPU/WebGL probes in try/catch + return tier-1.
-- **Autoplay audio policies** — never start audio without explicit user gesture; persist mute state.
-- **Motion sickness / a11y** — reduced-motion is a hard switch, not a softener: it must disable Lenis, camera flights, and parallax entirely.
-- **License / asset risk** — no SplitText, no GSAP Club plugins unless we buy a license; use MIT alternatives.
+## Technical details
 
-## Recommended sequencing
+**New files**
+- `src/routes/_authenticated.tsx` (layout with `beforeLoad` auth gate)
+- `src/routes/_authenticated/admin.tsx` (submissions + bookings dashboard)
+- `src/routes/login.tsx`
+- `src/lib/admin.functions.ts` (serverFn reads, `requireSupabaseAuth` + role check)
+- `src/routes/llms[.]txt.ts` (server route, markdown response)
+- `src/components/site/AudioToggle.tsx`, `GuidedTour.client.tsx`, `ParticleTrail.client.tsx`
+- `src/components/site/FaqSchema.tsx`, `ServiceSchema.tsx`, `ArticleSchema.tsx`
 
-1. **Week 1**: Phase 0 tokens + capability hook + Lenis + GSAP reveals + custom cursor + page transitions.
-2. **Week 2**: Hero R3F scene + GLSL aurora behind hero + scroll-pinned section.
-3. **Week 3**: Service-page glyphs + portfolio camera flights + ambient audio toggle + trajectory motion polish.
-4. **Week 4**: Spike experimental items, measure, promote or drop.
+**Edited files**
+- All route files: add/refine `head()` meta + JSON-LD.
+- `src/routes/__root.tsx`: Organization + WebSite JSON-LD, audio toggle, ensure auth state listener invalidates router + react-query cache.
+- `src/routes/sitemap[.]xml.ts`: include blog slugs from `blog-posts.ts`.
+- `src/routes/faq.tsx`: expand to 12+ Q&As + FAQPage schema.
+- Each service page: opening answer sentence + inline FAQ + Service schema.
+- `src/components/site/SiteHeader.tsx`: audio toggle, admin link when authed+role.
 
-## Out of scope (intentionally)
+**Database migration**
+- `app_role` enum (`admin`, `user`).
+- `user_roles` table (id, user_id → auth.users, role, unique(user_id, role)) + RLS.
+- `has_role(_user_id uuid, _role app_role)` SECURITY DEFINER function.
+- RLS policy: only `has_role(auth.uid(), 'admin')` can SELECT from `contact_submissions` and `call_bookings` (replace current `authenticated → true` policies).
 
-- Real-time multi-user 3D, AR/VR (WebXR), video-textured scenes, ML-driven personalization, server-side 3D rendering. Revisit only if the brand demands it.
+**Auth**
+- Email/password + Google via Lovable broker; call `supabase--configure_social_auth` with `["google"]`.
+- Do NOT auto-confirm email signups.
 
-Ready to build on approval — recommend starting with Phase 0 + Phase 1 in the first implementation pass.
+**Stack additions**
+- None for QA/SEO (uses existing libs).
+- Phase 3: no new deps (Web Audio is native, particle trail reuses three, Spline only if approved after spike).
+
+---
+
+## Sequencing
+
+1. Part A QA sweep → fix any defects found.
+2. Database migration (roles) → admin + login routes → verify admin data flow.
+3. Part B SEO pass (meta, JSON-LD, sitemap, FAQ expansion, llms.txt).
+4. Re-run Lighthouse / performance profile.
+5. Part C1 ship → measure → C2 spikes one at a time.
+
+Out of scope: multi-locale, AR/VR, ML personalization, real-time collab 3D.

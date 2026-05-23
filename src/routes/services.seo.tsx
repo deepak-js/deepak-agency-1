@@ -7,6 +7,7 @@ export const Route = createFileRoute("/services/seo")({
       { title: "SEO — Heisen Labs" },
       { name: "description", content: "Technical and content SEO grounded in real search intent." },
       { property: "og:title", content: "SEO — Heisen Labs" },
+      { property: "og:description", content: "Heisen Labs — boutique AI and automation studio." },
       { property: "og:url", content: "/services/seo" },
     ],
     links: [{ rel: "canonical", href: "/services/seo" }],

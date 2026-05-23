@@ -7,6 +7,7 @@ export const Route = createFileRoute("/services/ai-agents")({
       { title: "AI Agents — Heisen Labs" },
       { name: "description", content: "Internal copilots and assistants tuned to your data." },
       { property: "og:title", content: "AI Agents — Heisen Labs" },
+      { property: "og:description", content: "Heisen Labs — boutique AI and automation studio." },
       { property: "og:url", content: "/services/ai-agents" },
     ],
     links: [{ rel: "canonical", href: "/services/ai-agents" }],

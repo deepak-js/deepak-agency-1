@@ -14,6 +14,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookACallRouteImport } from './routes/book-a-call'
@@ -52,6 +53,11 @@ const PricingRoute = PricingRouteImport.update({
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/book-a-call': typeof BookACallRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/book-a-call': typeof BookACallRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/book-a-call': typeof BookACallRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/portfolio': typeof PortfolioRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/book-a-call'
     | '/contact'
     | '/faq'
+    | '/llms.txt'
     | '/portfolio'
     | '/pricing'
     | '/privacy'
@@ -219,6 +229,7 @@ export interface FileRouteTypes {
     | '/book-a-call'
     | '/contact'
     | '/faq'
+    | '/llms.txt'
     | '/portfolio'
     | '/pricing'
     | '/privacy'
@@ -240,6 +251,7 @@ export interface FileRouteTypes {
     | '/book-a-call'
     | '/contact'
     | '/faq'
+    | '/llms.txt'
     | '/portfolio'
     | '/pricing'
     | '/privacy'
@@ -262,6 +274,7 @@ export interface RootRouteChildren {
   BookACallRoute: typeof BookACallRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
   PortfolioRoute: typeof PortfolioRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/portfolio'
       fullPath: '/portfolio'
       preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -431,6 +451,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookACallRoute: BookACallRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
   PortfolioRoute: PortfolioRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
