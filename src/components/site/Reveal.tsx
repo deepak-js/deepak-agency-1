@@ -36,7 +36,7 @@ export function Reveal({
     return () => io.disconnect();
   }, []);
 
-  const Comp = Tag as unknown as React.ElementType;
+  const Comp: any = Tag;
   return (
     <Comp
       ref={ref}
