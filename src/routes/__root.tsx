@@ -67,7 +67,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Heisen Labs — AI & automation studio" },
       { name: "description", content: "Heisen Labs is a boutique AI and automation studio. We build websites that rank, workflows that run overnight, and AI integrations that actually work." },
-      { name: "theme-color", content: "#1a1815" },
+      { name: "theme-color", content: "#fafbff" },
       { property: "og:title", content: "Heisen Labs — AI & automation studio" },
       { property: "og:description", content: "The systems behind business growth." },
       { property: "og:type", content: "website" },
@@ -78,7 +78,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" },
     ],
     scripts: [
       {
@@ -167,7 +167,7 @@ function RootComponent() {
         <BookCallWidget />
         <AmbientAudio />
         <GuidedTour />
-        <Toaster theme="dark" position="bottom-center" richColors />
+        <Toaster theme="light" position="bottom-center" richColors />
       </div>
     </QueryClientProvider>
   );

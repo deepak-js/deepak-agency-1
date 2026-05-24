@@ -61,12 +61,12 @@ export function CustomCursor() {
       <div
         ref={dot}
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5 rounded-full bg-amber-accent mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5 rounded-full bg-foreground"
       />
       <div
         ref={ring}
         aria-hidden
-        className={`pointer-events-none fixed left-0 top-0 z-[99] rounded-full border border-amber-accent/60 mix-blend-difference transition-[width,height,opacity] duration-200 ease-out ${
+        className={`pointer-events-none fixed left-0 top-0 z-[99] rounded-full border border-foreground/40 transition-[width,height,opacity] duration-200 ease-out ${
           hover ? "h-12 w-12 opacity-100" : "h-8 w-8 opacity-70"
         }`}
       />

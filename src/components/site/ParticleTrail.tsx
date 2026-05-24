@@ -55,7 +55,7 @@ export function ParticleTrail() {
     let raf = 0;
     const loop = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.globalCompositeOperation = "lighter";
+      ctx.globalCompositeOperation = "multiply";
       for (let i = parts.length - 1; i >= 0; i--) {
         const p = parts[i];
         p.x += p.vx;
@@ -68,8 +68,8 @@ export function ParticleTrail() {
           continue;
         }
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
-        grad.addColorStop(0, `rgba(243, 178, 92, ${0.35 * t})`);
-        grad.addColorStop(1, "rgba(243, 178, 92, 0)");
+        grad.addColorStop(0, `rgba(30, 30, 40, ${0.18 * t})`);
+        grad.addColorStop(1, "rgba(30, 30, 40, 0)");
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r * 6, 0, Math.PI * 2);
@@ -93,7 +93,7 @@ export function ParticleTrail() {
     <canvas
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[90] mix-blend-screen"
+      className="pointer-events-none fixed inset-0 z-[90]"
     />
   );
 }
