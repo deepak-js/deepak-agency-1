@@ -53,19 +53,19 @@ const fragment = /* glsl */ `
     float n = fbm(p + vec2(t, -t * 0.7));
     float m = fbm(p * 1.4 + vec2(-t * 0.5, t * 0.9) + n);
 
-    // Ember + indigo blend
-    vec3 ember = vec3(0.95, 0.55, 0.22);
-    vec3 indigo = vec3(0.30, 0.32, 0.85);
-    vec3 deep = vec3(0.04, 0.05, 0.09);
+    // Pale lavender + ice blue + white (Redpanda-inspired light)
+    vec3 lavender = vec3(0.86, 0.84, 0.95);
+    vec3 ice = vec3(0.84, 0.92, 0.98);
+    vec3 white = vec3(0.99, 0.99, 1.0);
 
-    vec3 col = mix(deep, indigo, smoothstep(0.25, 0.85, m));
-    col = mix(col, ember, smoothstep(0.55, 0.95, n * m));
+    vec3 col = mix(white, lavender, smoothstep(0.25, 0.85, m));
+    col = mix(col, ice, smoothstep(0.55, 0.95, n * m));
 
-    // Vignette
-    float vig = smoothstep(1.1, 0.35, length(uv - 0.5));
-    col *= vig;
+    // Soft vignette toward white edges
+    float vig = smoothstep(1.2, 0.45, length(uv - 0.5));
+    col = mix(white, col, vig);
 
-    gl_FragColor = vec4(col, 0.85);
+    gl_FragColor = vec4(col, 0.55);
   }
 `;
 

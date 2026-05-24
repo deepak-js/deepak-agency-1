@@ -34,23 +34,23 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b transition-all ${
+      className={`sticky top-0 z-40 transition-all ${
         scrolled
-          ? "border-border/60 bg-background/80 backdrop-blur-xl"
-          : "border-transparent bg-background/40 backdrop-blur-md"
+          ? "bg-background/85 backdrop-blur-xl border-b border-border"
+          : "bg-background/60 backdrop-blur-md border-b border-transparent"
       }`}
     >
       <div className={`mx-auto flex max-w-7xl items-center justify-between px-4 lg:px-8 ${scrolled ? "py-3" : "py-4"}`}>
-        <Link to="/" className="text-serif text-xl tracking-tight">
-          <span className="text-foreground">Heisen</span>{" "}
+        <Link to="/" className="text-serif text-2xl tracking-tight">
+          <span className="text-foreground">Heisen</span>
           <span className="italic text-muted-foreground">Labs</span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-1 lg:flex font-mono text-[11px] uppercase tracking-[0.14em]">
           <Link
             to="/"
-            className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:text-foreground"
-            activeProps={{ className: "rounded-full px-4 py-2 text-sm text-foreground" }}
+            className="rounded-full px-4 py-2 text-muted-foreground transition hover:text-foreground"
+            activeProps={{ className: "rounded-full px-4 py-2 text-foreground" }}
             activeOptions={{ exact: true }}
           >
             Home
@@ -64,10 +64,10 @@ export function SiteHeader() {
           >
             <Link
               to="/services"
-              className="inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:text-foreground"
-              activeProps={{ className: "inline-flex items-center gap-1 rounded-full px-4 py-2 text-sm text-foreground" }}
+              className="inline-flex items-center gap-1 rounded-full px-4 py-2 text-muted-foreground transition hover:text-foreground"
+              activeProps={{ className: "inline-flex items-center gap-1 rounded-full px-4 py-2 text-foreground" }}
             >
-              Services <ChevronDown className="h-3.5 w-3.5" />
+              Services <ChevronDown className="h-3 w-3" />
             </Link>
             {megaOpen && (
               <div className="absolute left-1/2 top-full z-50 w-[640px] -translate-x-1/2 pt-3">
@@ -77,14 +77,14 @@ export function SiteHeader() {
                       <Link
                         key={to}
                         to={to}
-                        className="flex items-start gap-3 rounded-xl p-3 transition hover:bg-accent/60"
+                        className="flex items-start gap-3 rounded-xl p-3 transition hover:bg-accent"
                       >
-                        <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-card">
-                          <Icon className="h-4 w-4 text-amber-accent" />
+                        <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-card">
+                          <Icon className="h-4 w-4 text-foreground" />
                         </div>
                         <div>
-                          <div className="text-sm text-foreground">{title}</div>
-                          <div className="text-xs text-muted-foreground">{desc}</div>
+                          <div className="text-sm text-foreground normal-case tracking-normal">{title}</div>
+                          <div className="text-xs text-muted-foreground normal-case tracking-normal">{desc}</div>
                         </div>
                       </Link>
                     ))}
@@ -98,8 +98,8 @@ export function SiteHeader() {
             <Link
               key={n.to}
               to={n.to}
-              className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:text-foreground"
-              activeProps={{ className: "rounded-full px-4 py-2 text-sm text-foreground" }}
+              className="rounded-full px-4 py-2 text-muted-foreground transition hover:text-foreground"
+              activeProps={{ className: "rounded-full px-4 py-2 text-foreground" }}
             >
               {n.label}
             </Link>
@@ -108,7 +108,7 @@ export function SiteHeader() {
 
         <Link
           to="/book-a-call"
-          className="hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-glow transition hover:opacity-90 lg:inline-flex"
+          className="hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-primary-foreground transition hover:opacity-90 lg:inline-flex"
         >
           Book a call
           <ArrowUpRight className="h-4 w-4" />
