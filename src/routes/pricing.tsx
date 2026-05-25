@@ -122,8 +122,8 @@ function PricingPage() {
         <div className="mx-auto max-w-5xl px-4 py-20 lg:px-8">
           <p className="text-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Compare</p>
           <h2 className="mt-3 fluid-h2 text-serif">What's in each tier.</h2>
-          <div className="mt-10 overflow-hidden rounded-2xl border border-border/50">
-            <table className="w-full text-sm">
+          <div className="mt-10 overflow-x-auto rounded-2xl border border-border/50">
+            <table className="w-full min-w-[600px] text-sm">
               <thead>
                 <tr className="bg-surface/80 text-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                   <th className="px-5 py-4 text-left font-normal">Feature</th>

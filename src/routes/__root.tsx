@@ -12,14 +12,10 @@ import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { TopBanner } from "@/components/site/TopBanner";
-import { BookCallWidget } from "@/components/site/BookCallWidget";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
-import { CustomCursor } from "@/components/site/CustomCursor";
 import { PageTransition } from "@/components/site/PageTransition";
-import { GuidedTour } from "@/components/site/GuidedTour";
 import { AmbientAudio } from "@/components/site/AmbientAudio";
-import { ParticleTrail } from "@/components/site/ParticleTrail";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -75,14 +71,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Heisen Labs — AI & automation studio" },
       { name: "twitter:description", content: "Heisen Labs is a boutique AI and automation studio. We build websites that rank, workflows that run overnight, and AI integrations that actually work." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7c79aedb-c9c4-404d-b1a0-359457daa134/id-preview-4b4ac624--23a535f0-e137-4dc7-8518-78bbb96c3651.lovable.app-1779602416548.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7c79aedb-c9c4-404d-b1a0-359457daa134/id-preview-4b4ac624--23a535f0-e137-4dc7-8518-78bbb96c3651.lovable.app-1779602416548.png" },
+      { property: "og:image", content: "/og-image.png" },
+      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" },
+      { rel: "icon", href: "/favicon.ico" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { rel: "manifest", href: "/site.webmanifest" },
     ],
     scripts: [
       {
@@ -141,6 +142,22 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('hl_theme') || 'system';
+                  if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
       </head>
       <body>
         {children}
@@ -157,8 +174,6 @@ function RootComponent() {
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[70] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground">Skip to content</a>
       <ScrollProgress />
       <SmoothScroll />
-      <CustomCursor />
-      <ParticleTrail />
       <div className="min-h-screen flex flex-col">
         <TopBanner />
         <SiteHeader />
@@ -168,9 +183,7 @@ function RootComponent() {
           </PageTransition>
         </main>
         <SiteFooter />
-        <BookCallWidget />
         <AmbientAudio />
-        <GuidedTour />
         <Toaster theme="light" position="bottom-center" richColors />
       </div>
     </QueryClientProvider>

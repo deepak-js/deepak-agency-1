@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight, Menu, Sparkles, Workflow, LayoutTemplate, Search, Database, Bot, ChevronDown } from "lucide-react";
+import { ArrowUpRight, Menu, Sparkles, Workflow, LayoutTemplate, Search, Database, Bot, ChevronDown, Sun, Moon, Monitor } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -24,6 +24,46 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
+  const [themeOpen, setThemeOpen] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("hl_theme") as "light" | "dark" | "system";
+    if (saved) setTheme(saved);
+  }, []);
+
+  const applyTheme = (t: "light" | "dark" | "system") => {
+    setTheme(t);
+    localStorage.setItem("hl_theme", t);
+    
+    if (t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  useEffect(() => {
+    if (theme !== "system") return;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    };
+    media.addEventListener("change", handler);
+    return () => media.removeEventListener("change", handler);
+  }, [theme]);
+
+  useEffect(() => {
+    if (!themeOpen) return;
+    const handleClose = () => setThemeOpen(false);
+    window.addEventListener("click", handleClose);
+    return () => window.removeEventListener("click", handleClose);
+  }, [themeOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -106,13 +146,51 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          to="/book-a-call"
-          className="hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-primary-foreground transition hover:opacity-90 lg:inline-flex"
-        >
-          Book a call
-          <ArrowUpRight className="h-4 w-4" />
-        </Link>
+        <div className="hidden lg:flex items-center gap-3">
+          {/* Theme Dropdown */}
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setThemeOpen(!themeOpen)}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border/60 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              {theme === "light" && <Sun className="h-4 w-4" />}
+              {theme === "dark" && <Moon className="h-4 w-4" />}
+              {theme === "system" && <Monitor className="h-4 w-4" />}
+            </button>
+            {themeOpen && (
+              <div className="absolute right-0 mt-2 w-32 rounded-xl border border-border bg-popover p-1 shadow-elevated z-50">
+                {(["light", "dark", "system"] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => {
+                      applyTheme(t);
+                      setThemeOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-mono uppercase tracking-[0.05em] cursor-pointer transition-colors ${
+                      theme === t
+                        ? "bg-accent text-foreground font-semibold"
+                        : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                    }`}
+                  >
+                    {t === "light" && <Sun className="h-3.5 w-3.5" />}
+                    {t === "dark" && <Moon className="h-3.5 w-3.5" />}
+                    {t === "system" && <Monitor className="h-3.5 w-3.5" />}
+                    {t}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
+            to="/book-a-call"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-primary-foreground transition hover:opacity-90"
+          >
+            Book a call
+            <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
@@ -144,6 +222,27 @@ export function SiteHeader() {
                   {s.title}
                 </Link>
               ))}
+              <div className="my-4 h-px bg-border/60" />
+              <p className="px-3 text-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Theme</p>
+              <div className="mt-2 flex gap-1 px-2">
+                {(["light", "dark", "system"] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => applyTheme(t)}
+                    className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg border py-2 text-xs font-mono uppercase tracking-[0.05em] cursor-pointer transition-colors ${
+                      theme === t
+                        ? "border-primary bg-primary/10 text-foreground font-semibold"
+                        : "border-border/60 text-muted-foreground hover:bg-accent"
+                    }`}
+                  >
+                    {t === "light" && <Sun className="h-3.5 w-3.5" />}
+                    {t === "dark" && <Moon className="h-3.5 w-3.5" />}
+                    {t === "system" && <Monitor className="h-3.5 w-3.5" />}
+                    {t}
+                  </button>
+                ))}
+              </div>
+
               <Link
                 to="/book-a-call"
                 onClick={() => setOpen(false)}

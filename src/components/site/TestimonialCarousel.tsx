@@ -41,12 +41,14 @@ export function TestimonialCarousel() {
     <section className="border-t border-border/40 bg-hero">
       <div className="mx-auto max-w-5xl px-4 py-24 text-center lg:px-8">
         <p className="text-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">In their words</p>
-        <blockquote
-          key={i}
-          className="mx-auto mt-8 max-w-3xl animate-fade-in-up text-serif text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl"
-        >
-          &ldquo;{t.quote}&rdquo;
-        </blockquote>
+        <div className="mt-8 min-h-[220px] sm:min-h-[160px] md:min-h-[120px] flex items-center justify-center">
+          <blockquote
+            key={i}
+            className="mx-auto max-w-3xl animate-fade-in-up text-serif text-3xl leading-tight text-foreground sm:text-4xl lg:text-5xl"
+          >
+            &ldquo;{t.quote}&rdquo;
+          </blockquote>
+        </div>
         <figcaption className="mt-10 text-sm">
           <span className="text-foreground">{t.name}</span>
           <span className="text-muted-foreground"> · {t.role}, {t.company}</span>

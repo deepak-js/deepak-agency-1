@@ -8,7 +8,6 @@ import { LogoMarquee } from "@/components/site/LogoMarquee";
 import { ProcessTimeline } from "@/components/site/ProcessTimeline";
 import { MetricsBand } from "@/components/site/MetricsBand";
 import { TestimonialCarousel } from "@/components/site/TestimonialCarousel";
-import { HeroBackdrop } from "@/components/site/HeroBackdrop";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -56,7 +55,6 @@ function HomePage() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-hero">
-        <HeroBackdrop />
         <div aria-hidden className="absolute inset-0 bg-grid opacity-60" />
         <div className="relative mx-auto max-w-5xl px-4 py-28 text-center lg:px-8 lg:py-36">
           <div data-cursor="view" className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3 py-1 text-xs animate-fade-in-up">
